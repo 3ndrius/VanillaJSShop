@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Shop App Vanilla JS </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/VanillaJSShop.80ee2152.css">
 <script src="/VanillaJSShop.80ee2152.js"></script></head>
 <body>
-    <div class="app-header">
+    <header class="app-header">
         <div class="header__logo">
             Logo
         </div>
@@ -21,22 +22,20 @@
                     <a href="#" class="header__link">Products</a>
                 </li>
                 <li class="header__item">
-                    <a href="#" class="header__link">FAQ</a>
-                </li>
-                <li class="header__item">
                     <a href="#" class="header__link">Contact</a>
                 </li>
                 <li class="header__item">
-                    <a href="#" class="header__link">Cart</a>
+                    <a href="#" class="header__link"><i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i></a>
                 </li>
             </ul>
-        </nav>
+            </nav>
+        </header>
         <main class="app-main">
             <section class="intro">
                 <div class="intro__header">
                     <h1>Enjoy a travel</h1>
                     <p>See the most beautyfull place in the world!!</p>
-                    <button class="btn">
+                    <button class="btn btn--intro">
                         See more
                     </button>
                 </div>
@@ -52,17 +51,7 @@
                     <article class="products__item">
                         <div class="products__image">
                             <img src="/egipt.8a5a444c.jpg" alt="products-image">
-                        </div>
-                        <div class="products__title">
-                            Unforgetable Egipt
-                        </div>
-                        <div class="products__price">
-                            $1000
-                        </div>
-                    </article>
-                    <article class="products__item">
-                        <div class="products__image">
-                            <img src="/egipt.8a5a444c.jpg" alt="products-image">
+                            <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
                         </div>
                         <div class="products__title">
                             <h2>Unforgetable Egipt</h2>
@@ -74,6 +63,7 @@
                     <article class="products__item">
                         <div class="products__image">
                             <img src="/egipt.8a5a444c.jpg" alt="products-image">
+                            <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
                         </div>
                         <div class="products__title">
                             <h2>Unforgetable Egipt</h2>
@@ -85,6 +75,7 @@
                     <article class="products__item">
                         <div class="products__image">
                             <img src="/egipt.8a5a444c.jpg" alt="products-image">
+                            <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
                         </div>
                         <div class="products__title">
                             <h2>Unforgetable Egipt</h2>
@@ -96,6 +87,19 @@
                     <article class="products__item">
                         <div class="products__image">
                             <img src="/egipt.8a5a444c.jpg" alt="products-image">
+                            <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+                        </div>
+                        <div class="products__title">
+                            <h2>Unforgetable Egipt</h2>
+                        </div>
+                        <div class="products__price">
+                            $1000
+                        </div>
+                    </article>
+                    <article class="products__item">
+                        <div class="products__image">
+                            <img src="/egipt.8a5a444c.jpg" alt="products-image">
+                            <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
                         </div>
                         <div class="products__title">
                             <h2>Unforgetable Egipt</h2>
@@ -106,13 +110,22 @@
                     </article>
                 </div>
             </section>
+
+            <section class="shop-cart">
+                <div class="overlay"></div>
+                <div class="shop-cart__container">
+                    <h3>Title</h3>
+                    <img src="#" alt="img">
+                    <p>4</p>
+                    <p>price</p>
+                </div>
+            </section>
         </main>
         <footer class="app-footer">
            <div class="footer__copy">
                <p> All rights reserved 2019</p>
            </div>
         </footer>
-    </div>
     <script src="/VanillaJSShop.77de5100.js"></script>
 </body>
 </html>
