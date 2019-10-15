@@ -1,0 +1,43 @@
+:root {
+  --main_black: #131313;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* HEADER */
+.app-header {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+}
+
+.header__list {
+  display: flex;
+  list-style-type: none;
+}
+
+.header__item {
+  margin: 0 10px;
+}
+
+.header__item:last-child {
+  margin-right: 0;
+}
+
+.header__link {
+  text-decoration: none;
+  color: black;
+}
+
+/* MAIN */
+.app-main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
