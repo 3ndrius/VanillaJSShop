@@ -1,6 +1,6 @@
 :root {
   --main_black: #131313;
-  --second__black:#1b283b;
+  --second__black:#363636;
   --main_white: #d4d4d4;
 }
 
@@ -13,13 +13,14 @@
 /* ######### GLOBAL ################## */
 .btn {
   height: 50px;
-  width: 150px;
-  border: 3px solid black;
+  width: 170px;
+  border: none;
   background: transparent;
-  color: var(--main_black);
+  color: var(--main_white);
+  background: var(--main_black);
 }
 .btn:hover {
-  background: var(--main_white);
+  background: var(--second__black);
   cursor: pointer;
 }
 
