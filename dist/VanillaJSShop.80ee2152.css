@@ -37,8 +37,8 @@
 }
 
 .header__list {
-  display: flex;
   list-style-type: none;
+  display: flex;
 }
 
 .header__item {
@@ -55,6 +55,11 @@
 }
 .header__link:hover {
   color: var(--second__black);
+}
+.header__link--shop {
+  background: var(--main_black);
+  padding: 10px;
+  color: var(--main_white);
 }
 
 /* ############ MAIN ############# */
@@ -175,7 +180,7 @@
 }
 
 /* ########## MEDIA QUERY ############# */
-@media (min-width: 1200px) {
+@media (min-width: 968px) {
   .intro {
     font-size: 25px;
   }
