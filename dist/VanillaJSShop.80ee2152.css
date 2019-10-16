@@ -1,8 +1,14 @@
 :root {
   --main_black: #131313;
-  --second__black:#363636;
+  --second__black: #363636;
   --main_white: #d4d4d4;
   --main-theme: #049b87;
+  --light-bg: #ffffff;
+}
+
+body {
+  height: 100%;
+  background: var(--light-bg);
 }
 
 * {
@@ -25,6 +31,70 @@
   cursor: pointer;
 }
 
+.shop-cart {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  height: 100%;
+  width: 100%;
+  background: rgba(82, 82, 82, 0.404);
+  display: flex;
+  font-size: 18px;
+  overflow: hidden;
+  display: none;
+}
+.shop-cart .shop-cart__container {
+  width: 30%;
+  min-width: 400px;
+  background: #049b87;
+  position: relative;
+  transform: translate(101%);
+}
+.shop-cart .shop-cart__container .close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}
+.shop-cart .shop-cart__container .shop-cart__wrap {
+  padding: 55px 30px;
+  display: flex;
+  flex-direction: column;
+}
+.shop-cart .shop-cart__container .shop-cart__wrap h3 {
+  padding: 20px 0;
+  font-size: 2em;
+}
+.shop-cart .shop-cart__container .shop-cart__wrap .shop-cart__total {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.shop-cart .shop-cart__container .shop-cart__wrap .shop-cart__total h4 {
+  padding: 30px 0;
+  font-size: 1.5em;
+}
+.shop-cart .shop-cart__list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+}
+.shop-cart .shop-cart__list li .count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.shop-cart .shop-cart__list img {
+  height: 80px;
+  width: auto;
+}
+.shop-cart .overlay {
+  width: 70%;
+}
+
 /* ############## HEADER ################### */
 .app-header {
   max-width: 1200px;
@@ -34,11 +104,18 @@
   align-items: center;
   height: 60px;
   padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  background: var(--light-bg);
+  z-index: 999;
 }
 
 .header__list {
-  display: flex;
   list-style-type: none;
+  display: flex;
 }
 
 .header__item {
@@ -56,10 +133,22 @@
 .header__link:hover {
   color: var(--second__black);
 }
+.header__link--shop {
+  position: relative;
+  background: var(--main_black);
+  padding: 15px 17px 10px 10px;
+  color: var(--main_white);
+}
+.header__link--shop .header-count {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
 
 /* ############ MAIN ############# */
 .app-main {
   font-size: 16px;
+  margin-top: 60px;
 }
 
 .intro {
@@ -175,7 +264,7 @@
 }
 
 /* ########## MEDIA QUERY ############# */
-@media (min-width: 1200px) {
+@media (min-width: 968px) {
   .intro {
     font-size: 25px;
   }
