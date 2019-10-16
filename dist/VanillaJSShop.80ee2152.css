@@ -1,12 +1,14 @@
 :root {
   --main_black: #131313;
-  --second__black:#363636;
+  --second__black: #363636;
   --main_white: #d4d4d4;
   --main-theme: #049b87;
+  --light-bg: #ffffff;
 }
 
 body {
   height: 100%;
+  background: var(--light-bg);
 }
 
 * {
@@ -107,7 +109,8 @@ body {
   left: 0;
   right: 0;
   margin: 0 auto;
-  background: white;
+  background: var(--light-bg);
+  z-index: 999;
 }
 
 .header__list {
