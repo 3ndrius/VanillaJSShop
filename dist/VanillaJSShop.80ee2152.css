@@ -111,6 +111,7 @@ body {
   margin: 0 auto;
   background: var(--light-bg);
   z-index: 999;
+  font-size: 20px;
 }
 
 .header__list {
@@ -147,7 +148,7 @@ body {
 
 /* ############ MAIN ############# */
 .app-main {
-  font-size: 16px;
+  font-size: 18px;
   margin-top: 60px;
 }
 
@@ -266,6 +267,6 @@ body {
 /* ########## MEDIA QUERY ############# */
 @media (min-width: 968px) {
   .intro {
-    font-size: 25px;
+    font-size: 35px;
   }
 }
