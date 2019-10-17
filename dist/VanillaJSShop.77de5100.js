@@ -105,7 +105,20 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   // Override the current require with this new one
   return newRequire;
 })({"index.ts":[function(require,module,exports) {
-
+var cartMenuWrapper = document.querySelector('.shop-cart');
+var cartMenuBtn = document.querySelector('.cart-button');
+var cartMenu = document.querySelector('.shop-cart__container');
+var closeBtn = document.querySelector('.close');
+cartMenuBtn.addEventListener('click', function () {
+  cartMenuWrapper.style.display = 'flex';
+  cartMenu.style.transform = "translateX(0%)";
+  document.body.style.overflow = "hidden";
+});
+closeBtn.addEventListener('click', function () {
+  cartMenuWrapper.style.display = 'none';
+  cartMenu.style.transform = "translateX(101%)";
+  document.body.style.overflowY = "scroll";
+});
 },{}],"C:/Users/andrz/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -276,3 +289,4 @@ function hmrAccept(bundle, id) {
   });
 }
 },{}]},{},["C:/Users/andrz/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.ts"], null)
+//# sourceMappingURL=/VanillaJSShop.77de5100.map
