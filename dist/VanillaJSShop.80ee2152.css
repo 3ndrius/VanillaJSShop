@@ -44,12 +44,21 @@ body {
   overflow: hidden;
   display: none;
 }
+@keyframes show {
+  0% {
+    transform: translateX(101%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
 .shop-cart .shop-cart__container {
   width: 30%;
   min-width: 400px;
   background: #049b87;
   position: relative;
-  transform: translate(101%);
+  transform: translateX(101%);
+  animation: show 0.7s ease-in-out;
 }
 .shop-cart .shop-cart__container .close {
   position: absolute;
@@ -111,6 +120,7 @@ body {
   margin: 0 auto;
   background: var(--light-bg);
   z-index: 999;
+  font-size: 20px;
 }
 
 .header__list {
@@ -147,7 +157,7 @@ body {
 
 /* ############ MAIN ############# */
 .app-main {
-  font-size: 16px;
+  font-size: 18px;
   margin-top: 60px;
 }
 
@@ -266,6 +276,6 @@ body {
 /* ########## MEDIA QUERY ############# */
 @media (min-width: 968px) {
   .intro {
-    font-size: 25px;
+    font-size: 35px;
   }
 }

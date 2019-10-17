@@ -48,14 +48,24 @@ body {
     font-size: 18px;
     overflow: hidden;
     display: none;
+    
 
-
+@keyframes show {
+        0%{
+            transform: translateX(101%);
+        }
+        100%{
+            transform: translateX(0%);
+        }
+    
+}
     .shop-cart__container {
         width: 30%;
         min-width: 400px;
         background: #049b87;
         position: relative;
-        transform: translate(101%);
+        transform: translateX(101%);
+        animation: show 0.7s ease-in-out;;
 
         .close {
             position: absolute;
@@ -67,6 +77,7 @@ body {
             padding: 55px 30px;
             display: flex;
             flex-direction: column;
+          
 
 
             h3 {
@@ -111,6 +122,7 @@ body {
 
     .overlay {
         width: 70%;
+       
     }
 }
 
@@ -130,6 +142,7 @@ body {
     margin: 0 auto;
     background: var(--light-bg);
     z-index: 999;
+    font-size:20px;
 }
 
 .header__list {
@@ -167,12 +180,10 @@ body {
     }
 }
 
-
-
 /* ############ MAIN ############# */
 
 .app-main {
-    font-size: 16px;
+    font-size: 18px;
     margin-top: 60px;
 }
 
@@ -305,7 +316,7 @@ body {
 
 @media(min-width:968px) {
     .intro {
-        font-size: 25px;
+        font-size: 35px;
     }
 
 
