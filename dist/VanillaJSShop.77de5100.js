@@ -104,7 +104,131 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({"index.ts":[function(require,module,exports) {
+})({"products.json":[function(require,module,exports) {
+module.exports = {
+  "items": [{
+    "sys": {
+      "id": "1"
+    },
+    "fields": {
+      "title": "Berlin",
+      "price": 109.99,
+      "image": {
+        "fields": {
+          "file": {
+            "url": "./assets/berlin.jpg"
+          }
+        }
+      }
+    }
+  }, {
+    "sys": {
+      "id": "2"
+    },
+    "fields": {
+      "title": "Madrid",
+      "price": 122.99,
+      "image": {
+        "fields": {
+          "file": {
+            "url": "./assets/madrid.jpg"
+          }
+        }
+      }
+    }
+  }, {
+    "sys": {
+      "id": "3"
+    },
+    "fields": {
+      "title": "Buenos Aires",
+      "price": 1230.99,
+      "image": {
+        "fields": {
+          "file": {
+            "url": "./assets/buenos.jpg"
+          }
+        }
+      }
+    }
+  }, {
+    "sys": {
+      "id": "4"
+    },
+    "fields": {
+      "title": "Sydney",
+      "price": 22.99,
+      "image": {
+        "fields": {
+          "file": {
+            "url": "./assets/sydney.jpg"
+          }
+        }
+      }
+    }
+  }, {
+    "sys": {
+      "id": "5"
+    },
+    "fields": {
+      "title": "Pekin",
+      "price": 88.99,
+      "image": {
+        "fields": {
+          "file": {
+            "url": "./assets/pekin.jpg"
+          }
+        }
+      }
+    }
+  }, {
+    "sys": {
+      "id": "6"
+    },
+    "fields": {
+      "title": "Moscow",
+      "price": 320.99,
+      "image": {
+        "fields": {
+          "file": {
+            "url": "./assets/moscow.jpg"
+          }
+        }
+      }
+    }
+  }, {
+    "sys": {
+      "id": "7"
+    },
+    "fields": {
+      "title": "Budapest",
+      "price": 450.99,
+      "image": {
+        "fields": {
+          "file": {
+            "url": "./assets/budapest.jpg"
+          }
+        }
+      }
+    }
+  }, {
+    "sys": {
+      "id": "8"
+    },
+    "fields": {
+      "title": "London",
+      "price": 330.99,
+      "image": {
+        "fields": {
+          "file": {
+            "url": "./assets/london.jpg"
+          }
+        }
+      }
+    }
+  }]
+};
+},{}],"index.ts":[function(require,module,exports) {
 var cartMenuWrapper = document.querySelector('.shop-cart');
 var cartMenuBtn = document.querySelector('.cart-button');
 var cartMenu = document.querySelector('.shop-cart__container');
@@ -119,7 +243,26 @@ closeBtn.addEventListener('click', function () {
   cartMenu.style.transform = "translateX(101%)";
   document.body.style.overflowY = "scroll";
 });
-},{}],"C:/Users/andrz/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var cart = [];
+
+var Products =
+/** @class */
+function () {
+  function Products() {}
+
+  Products.prototype.getProducts = function () {
+    var result = require('./products.json');
+
+    console.log(result);
+    return result;
+  };
+
+  return Products;
+}();
+
+var product = new Products();
+product.getProducts();
+},{"./products.json":"products.json"}],"C:/Users/andrz/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -146,7 +289,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61362" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62717" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
