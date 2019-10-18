@@ -79,31 +79,34 @@ class UI {
     }
     getButtons() {
         const buttonsBuy = [...document.querySelectorAll(".buy-btn")]
-        
+
         buttonsBuy.forEach(button => {
             let id = button.dataset.id;
             let inCart = cart.find(item => item.id === id);
-            if(inCart) {
+            if (inCart) {
                 button.innerHTML = " In cart"
                 button.disabled = true;
             }
-                button.addEventListener('click', (e)=> {
-                    e.target.disabled = true;
-                    e.target.innerHTML = " In cart"
-                    console.log(e.target);
-                    let cartItem = { ...Storage.getFromStorage(id), amount: 1 };
-                    cart = [...cart, cartItem];
-            
-                    console.log(cart);
-                    Storage.saveCart(cart);
+            button.addEventListener('click', (e) => {
+                e.target.disabled = true;
+                e.target.innerHTML = " In cart"
+                console.log(e.target);
+                let cartItem = {
+                    ...Storage.getFromStorage(id),
+                    amount: 1
+                };
+                cart = [...cart, cartItem];
 
-                    this.setCartTotal(cart)
-            
-                    this.addToCart(cartItem);
+                console.log(cart);
+                Storage.saveCart(cart);
 
-                })
-                
-           
+                this.setCartTotal(cart)
+
+                this.addToCart(cartItem);
+
+            })
+
+
         })
 
     }
@@ -119,7 +122,7 @@ class UI {
     }
     addToCart(item) {
         let listItem = document.createElement('li');
-         listItem.innerHTML = `
+        listItem.innerHTML = `
         <img src=${item.image} alt="small-img">
         <div class="wrap">
             <h4>${item.title}</h4>
@@ -131,7 +134,7 @@ class UI {
             <p>${item.amount}</p>
             <i class="fa fa-angle-down" aria-hidden="true"></i>
         </div>
-        ` 
+        `
         menuCartList.appendChild(listItem);
     }
     setupApp() {
@@ -139,10 +142,10 @@ class UI {
         this.setCartTotal(cart);
         this.populateCart(cart);
     }
-    populateCart(cart){
+    populateCart(cart) {
         cart.forEach(item => this.addToCart(item));
     }
-  
+
 }
 class Storage {
 
@@ -153,26 +156,26 @@ class Storage {
         let product = JSON.parse(localStorage.getItem("products"));
         return product.find(item => item.id === id)
     }
-    static saveCart(cart){
+    static saveCart(cart) {
         localStorage.setItem('cart', JSON.stringify(cart));
         console.log("save");
     }
     static getCart() {
-      return localStorage.getItem('cart') ? 
-      JSON.parse(localStorage.getItem('cart')) : []
+        return localStorage.getItem('cart') ?
+            JSON.parse(localStorage.getItem('cart')) : []
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     let products = new Products;
     let layout = new UI;
     layout.setupApp();
     products.getProducts().then(product => {
-        layout.showProducts(product)
-        Storage.saveToStorage(product);
-    })
-    .then(() => {
-        layout.getButtons();
-    })
+            layout.showProducts(product)
+            Storage.saveToStorage(product);
+        })
+        .then(() => {
+            layout.getButtons();
+        })
 
 })
