@@ -407,6 +407,8 @@ var cartMenuBtn = document.querySelector('.cart-button');
 var cartMenu = document.querySelector('.shop-cart__container');
 var closeBtn = document.querySelector('.close');
 var productsDom = document.querySelector('.products__container');
+var headerTotal = document.querySelector('.header-count');
+var totalPrice = document.querySelector('.total-price');
 cartMenuBtn.addEventListener('click', function () {
   cartMenuWrapper.style.display = 'flex';
   cartMenu.style.transform = "translateX(0%)";
@@ -489,6 +491,8 @@ function () {
   };
 
   UI.prototype.getButtons = function () {
+    var _this = this;
+
     var buttonsBuy = __spreadArrays(document.querySelectorAll(".buy-btn"));
 
     buttonsBuy.forEach(function (button) {
@@ -514,8 +518,21 @@ function () {
         cart = __spreadArrays(cart, [cartItem]);
         console.log(cart);
         Storage.saveCart(cart);
+
+        _this.setCartTotal(cart);
       });
     });
+  };
+
+  UI.prototype.setCartTotal = function (cart) {
+    var tempTotal = 0;
+    var itemsTotal = 0;
+    cart.map(function (item) {
+      tempTotal += item.price * item.amount;
+      itemsTotal += item.amount;
+    });
+    totalPrice.innerText = parseFloat(tempTotal.toFixed(2));
+    headerTotal.innerText = itemsTotal;
   };
 
   return UI;

@@ -3,7 +3,8 @@ const cartMenuBtn = document.querySelector('.cart-button');
 const cartMenu = document.querySelector('.shop-cart__container');
 const closeBtn = document.querySelector('.close');
 const productsDom = document.querySelector('.products__container')
-
+const headerTotal = document.querySelector('.header-count');
+const totalPrice = document.querySelector('.total-price');
 
 
 cartMenuBtn.addEventListener('click', () => {
@@ -90,11 +91,13 @@ class UI {
                     console.log(e.target);
                     let cartItem = { ...Storage.getFromStorage(id), amount: 1 };
                     cart = [...cart, cartItem];
-                   
-
-                  
+            
                     console.log(cart);
                     Storage.saveCart(cart);
+
+                    this.setCartTotal(cart)
+            
+                    
 
                 })
                 
@@ -102,6 +105,17 @@ class UI {
         })
 
     }
+    setCartTotal(cart) {
+        let tempTotal = 0;
+        let itemsTotal = 0;
+        cart.map(item => {
+            tempTotal += item.price * item.amount;
+            itemsTotal += item.amount;
+        })
+        totalPrice.innerText = parseFloat(tempTotal.toFixed(2));
+        headerTotal.innerText = itemsTotal;
+    }
+    
 }
 class Storage {
 
