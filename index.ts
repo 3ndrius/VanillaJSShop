@@ -134,6 +134,14 @@ class UI {
         ` 
         menuCartList.appendChild(listItem);
     }
+    setupApp() {
+        cart = Storage.getCart();
+        this.setCartTotal(cart);
+        this.populateCart(cart);
+    }
+    populateCart(cart){
+        cart.forEach(item => this.addToCart(item));
+    }
   
 }
 class Storage {
@@ -149,11 +157,16 @@ class Storage {
         localStorage.setItem('cart', JSON.stringify(cart));
         console.log("save");
     }
+    static getCart() {
+      return localStorage.getItem('cart') ? 
+      JSON.parse(localStorage.getItem('cart')) : []
+    }
 }
 document.addEventListener('DOMContentLoaded', () => {
-
+    
     let products = new Products;
     let layout = new UI;
+    layout.setupApp();
     products.getProducts().then(product => {
         layout.showProducts(product)
         Storage.saveToStorage(product);

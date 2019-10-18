@@ -544,6 +544,20 @@ function () {
     menuCartList.appendChild(listItem);
   };
 
+  UI.prototype.setupApp = function () {
+    cart = Storage.getCart();
+    this.setCartTotal(cart);
+    this.populateCart(cart);
+  };
+
+  UI.prototype.populateCart = function (cart) {
+    var _this = this;
+
+    cart.forEach(function (item) {
+      return _this.addToCart(item);
+    });
+  };
+
   return UI;
 }();
 
@@ -568,12 +582,17 @@ function () {
     console.log("save");
   };
 
+  Storage.getCart = function () {
+    return localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
+  };
+
   return Storage;
 }();
 
 document.addEventListener('DOMContentLoaded', function () {
   var products = new Products();
   var layout = new UI();
+  layout.setupApp();
   products.getProducts().then(function (product) {
     layout.showProducts(product);
     Storage.saveToStorage(product);
