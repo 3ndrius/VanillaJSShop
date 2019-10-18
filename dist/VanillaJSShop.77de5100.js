@@ -409,6 +409,7 @@ var closeBtn = document.querySelector('.close');
 var productsDom = document.querySelector('.products__container');
 var headerTotal = document.querySelector('.header-count');
 var totalPrice = document.querySelector('.total-price');
+var menuCartList = document.querySelector('.shop-cart__list');
 cartMenuBtn.addEventListener('click', function () {
   cartMenuWrapper.style.display = 'flex';
   cartMenu.style.transform = "translateX(0%)";
@@ -520,6 +521,8 @@ function () {
         Storage.saveCart(cart);
 
         _this.setCartTotal(cart);
+
+        _this.addToCart(cartItem);
       });
     });
   };
@@ -533,6 +536,12 @@ function () {
     });
     totalPrice.innerText = parseFloat(tempTotal.toFixed(2));
     headerTotal.innerText = itemsTotal;
+  };
+
+  UI.prototype.addToCart = function (item) {
+    var listItem = document.createElement('li');
+    listItem.innerHTML = "\n        <img src=" + item.image + " alt=\"small-img\">\n        <div class=\"wrap\">\n            <h4>" + item.title + "</h4>\n            <h5>$" + item.price + "</h5>\n            <p>remove</p>\n        </div>\n        <div class=\"count\">\n            <i class=\"fa fa-angle-up\" aria-hidden=\"true\"></i>\n            <p>" + item.amount + "</p>\n            <i class=\"fa fa-angle-down\" aria-hidden=\"true\"></i>\n        </div>\n        ";
+    menuCartList.appendChild(listItem);
   };
 
   return UI;

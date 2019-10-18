@@ -6,6 +6,8 @@ const productsDom = document.querySelector('.products__container')
 const headerTotal = document.querySelector('.header-count');
 const totalPrice = document.querySelector('.total-price');
 
+const menuCartList = document.querySelector('.shop-cart__list');
+
 
 cartMenuBtn.addEventListener('click', () => {
     cartMenuWrapper.style.display = 'flex';
@@ -97,7 +99,7 @@ class UI {
 
                     this.setCartTotal(cart)
             
-                    
+                    this.addToCart(cartItem);
 
                 })
                 
@@ -115,7 +117,24 @@ class UI {
         totalPrice.innerText = parseFloat(tempTotal.toFixed(2));
         headerTotal.innerText = itemsTotal;
     }
-    
+    addToCart(item) {
+        let listItem = document.createElement('li');
+         listItem.innerHTML = `
+        <img src=${item.image} alt="small-img">
+        <div class="wrap">
+            <h4>${item.title}</h4>
+            <h5>$${item.price}</h5>
+            <p>remove</p>
+        </div>
+        <div class="count">
+            <i class="fa fa-angle-up" aria-hidden="true"></i>
+            <p>${item.amount}</p>
+            <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </div>
+        ` 
+        menuCartList.appendChild(listItem);
+    }
+  
 }
 class Storage {
 
