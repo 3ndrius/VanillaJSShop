@@ -8,6 +8,8 @@ const totalPrice = document.querySelector('.total-price');
 
 const menuCartList = document.querySelector('.shop-cart__list');
 
+const clearCartBtn = document.querySelector('.btn--total');
+
 
 cartMenuBtn.addEventListener('click', () => {
     cartMenuWrapper.style.display = 'flex';
@@ -145,6 +147,14 @@ class UI {
     populateCart(cart) {
         cart.forEach(item => this.addToCart(item));
     }
+    clearCart() {
+        Storage.clearCart();
+        let cart = Storage.getCart();
+        this.setCartTotal(cart);
+        this.populateCart(cart);
+        console.log(cart);
+        this.getButtons();
+    }
 
 }
 class Storage {
@@ -164,6 +174,9 @@ class Storage {
         return localStorage.getItem('cart') ?
             JSON.parse(localStorage.getItem('cart')) : []
     }
+    static clearCart() {
+        return localStorage.clear('cart');
+    }
 }
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -176,6 +189,9 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(() => {
             layout.getButtons();
+        })
+        clearCartBtn.addEventListener('click', ()=> {
+            layout.clearCart();
         })
 
 })
