@@ -229,6 +229,22 @@ module.exports = {
   }]
 };
 },{}],"index.ts":[function(require,module,exports) {
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
   function adopt(value) {
     return value instanceof P ? value : new P(function (resolve) {
@@ -372,6 +388,20 @@ var __generator = this && this.__generator || function (thisArg, body) {
   }
 };
 
+var __spreadArrays = this && this.__spreadArrays || function () {
+  for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
+    s += arguments[i].length;
+  }
+
+  for (var r = Array(s), k = 0, i = 0; i < il; i++) {
+    for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {
+      r[k] = a[j];
+    }
+  }
+
+  return r;
+};
+
 var cartMenuWrapper = document.querySelector('.shop-cart');
 var cartMenuBtn = document.querySelector('.cart-button');
 var cartMenu = document.querySelector('.shop-cart__container');
@@ -453,9 +483,37 @@ function () {
   UI.prototype.showProducts = function (data) {
     var resultItem = " ";
     data.forEach(function (item) {
-      resultItem += "\n        <article class=\"products__item\">\n        <div class=\"products__image\">\n            <img src=" + item.image + " alt=\"products-image\">\n            <i class=\"fa fa-shopping-cart fa-lg\" data-id=" + item.id + " aria-hidden=\"true\"></i>\n        </div>\n        <div class=\"products__title\">\n            <h2>" + item.title + "</h2>\n        </div>\n        <div class=\"products__price\">\n            " + item.price + "\n        </div>\n    </article>\n        ";
+      resultItem += "\n        <article class=\"products__item\">\n            <div class=\"products__image\">\n                <img src=" + item.image + " alt=\"products-image\">\n                <i class=\"fa fa-shopping-cart fa-lg\" id=\"buy-btn\"  data-id=" + item.id + " aria-hidden=\"true\"> Add to cart</i>\n            </div>\n            <div class=\"products__title\">\n                <h2>" + item.title + "</h2>\n            </div>\n            <div class=\"products__price\">\n                " + item.price + "\n            </div>\n        </article>\n        ";
     });
     productsDom.innerHTML = resultItem;
+  };
+
+  UI.prototype.getButtons = function () {
+    var buttonsBuy = __spreadArrays(document.querySelectorAll("#buy-btn"));
+
+    buttonsBuy.forEach(function (button) {
+      var id = button.dataset.id;
+      var inCart = cart.find(function (item) {
+        return item.id === id;
+      });
+
+      if (inCart) {
+        button.innerHTML = " In cart";
+        button.disabled = true;
+      }
+
+      button.addEventListener('click', function (e) {
+        e.target.disabled = true;
+        button.innerHTML = " In cart";
+
+        var cartItem = __assign(__assign({}, Storage.getFromStorage(id)), {
+          amount: 1
+        });
+
+        cart = __spreadArrays(cart, [cartItem]);
+        console.log(cart);
+      });
+    });
   };
 
   return UI;
@@ -466,6 +524,17 @@ var Storage =
 function () {
   function Storage() {}
 
+  Storage.saveToStorage = function (data) {
+    localStorage.setItem("products", JSON.stringify(data));
+  };
+
+  Storage.getFromStorage = function (id) {
+    var product = JSON.parse(localStorage.getItem("products"));
+    return product.find(function (item) {
+      return item.id === id;
+    });
+  };
+
   return Storage;
 }();
 
@@ -474,6 +543,9 @@ document.addEventListener('DOMContentLoaded', function () {
   var layout = new UI();
   products.getProducts().then(function (product) {
     layout.showProducts(product);
+    Storage.saveToStorage(product);
+  }).then(function () {
+    layout.getButtons();
   });
 });
 },{"./products.json":"products.json"}],"C:/Users/andrz/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -503,7 +575,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65328" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49611" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
