@@ -410,6 +410,7 @@ var productsDom = document.querySelector('.products__container');
 var headerTotal = document.querySelector('.header-count');
 var totalPrice = document.querySelector('.total-price');
 var menuCartList = document.querySelector('.shop-cart__list');
+var clearCartBtn = document.querySelector('.btn--total');
 cartMenuBtn.addEventListener('click', function () {
   cartMenuWrapper.style.display = 'flex';
   cartMenu.style.transform = "translateX(0%)";
@@ -558,6 +559,15 @@ function () {
     });
   };
 
+  UI.prototype.clearCart = function () {
+    Storage.clearCart();
+    var cart = Storage.getCart();
+    this.setCartTotal(cart);
+    this.populateCart(cart);
+    console.log(cart);
+    this.getButtons();
+  };
+
   return UI;
 }();
 
@@ -586,6 +596,10 @@ function () {
     return localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
   };
 
+  Storage.clearCart = function () {
+    return localStorage.clear('cart');
+  };
+
   return Storage;
 }();
 
@@ -598,6 +612,9 @@ document.addEventListener('DOMContentLoaded', function () {
     Storage.saveToStorage(product);
   }).then(function () {
     layout.getButtons();
+  });
+  clearCartBtn.addEventListener('click', function () {
+    layout.clearCart();
   });
 });
 },{"./products.json":"products.json"}],"C:/Users/andrz/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -627,7 +644,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54149" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60397" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
