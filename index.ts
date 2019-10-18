@@ -60,7 +60,7 @@ class UI {
         <article class="products__item">
             <div class="products__image">
                 <img src=${item.image} alt="products-image">
-                <i class="fa fa-shopping-cart fa-lg" id="buy-btn"  data-id=${item.id} aria-hidden="true"> Add to cart</i>
+                <button class="buy-btn" data-id=${item.id}> Add to cart</button>
             </div>
             <div class="products__title">
                 <h2>${item.title}</h2>
@@ -75,7 +75,7 @@ class UI {
         productsDom.innerHTML = resultItem;
     }
     getButtons() {
-        const buttonsBuy = [...document.querySelectorAll("#buy-btn")]
+        const buttonsBuy = [...document.querySelectorAll(".buy-btn")]
         
         buttonsBuy.forEach(button => {
             let id = button.dataset.id;
@@ -86,11 +86,16 @@ class UI {
             }
                 button.addEventListener('click', (e)=> {
                     e.target.disabled = true;
-                    button.innerHTML = " In cart"
-
+                    e.target.innerHTML = " In cart"
+                    console.log(e.target);
                     let cartItem = { ...Storage.getFromStorage(id), amount: 1 };
                     cart = [...cart, cartItem];
+                   
+
+                  
                     console.log(cart);
+                    Storage.saveCart(cart);
+
                 })
                 
            
@@ -106,6 +111,10 @@ class Storage {
     static getFromStorage(id) {
         let product = JSON.parse(localStorage.getItem("products"));
         return product.find(item => item.id === id)
+    }
+    static saveCart(cart){
+        localStorage.setItem('cart', JSON.stringify(cart));
+        console.log("save");
     }
 }
 document.addEventListener('DOMContentLoaded', () => {

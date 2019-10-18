@@ -483,13 +483,13 @@ function () {
   UI.prototype.showProducts = function (data) {
     var resultItem = " ";
     data.forEach(function (item) {
-      resultItem += "\n        <article class=\"products__item\">\n            <div class=\"products__image\">\n                <img src=" + item.image + " alt=\"products-image\">\n                <i class=\"fa fa-shopping-cart fa-lg\" id=\"buy-btn\"  data-id=" + item.id + " aria-hidden=\"true\"> Add to cart</i>\n            </div>\n            <div class=\"products__title\">\n                <h2>" + item.title + "</h2>\n            </div>\n            <div class=\"products__price\">\n                " + item.price + "\n            </div>\n        </article>\n        ";
+      resultItem += "\n        <article class=\"products__item\">\n            <div class=\"products__image\">\n                <img src=" + item.image + " alt=\"products-image\">\n                <button class=\"buy-btn\" data-id=" + item.id + "> Add to cart</button>\n            </div>\n            <div class=\"products__title\">\n                <h2>" + item.title + "</h2>\n            </div>\n            <div class=\"products__price\">\n                " + item.price + "\n            </div>\n        </article>\n        ";
     });
     productsDom.innerHTML = resultItem;
   };
 
   UI.prototype.getButtons = function () {
-    var buttonsBuy = __spreadArrays(document.querySelectorAll("#buy-btn"));
+    var buttonsBuy = __spreadArrays(document.querySelectorAll(".buy-btn"));
 
     buttonsBuy.forEach(function (button) {
       var id = button.dataset.id;
@@ -504,7 +504,8 @@ function () {
 
       button.addEventListener('click', function (e) {
         e.target.disabled = true;
-        button.innerHTML = " In cart";
+        e.target.innerHTML = " In cart";
+        console.log(e.target);
 
         var cartItem = __assign(__assign({}, Storage.getFromStorage(id)), {
           amount: 1
@@ -512,6 +513,7 @@ function () {
 
         cart = __spreadArrays(cart, [cartItem]);
         console.log(cart);
+        Storage.saveCart(cart);
       });
     });
   };
@@ -533,6 +535,11 @@ function () {
     return product.find(function (item) {
       return item.id === id;
     });
+  };
+
+  Storage.saveCart = function (cart) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    console.log("save");
   };
 
   return Storage;
@@ -575,7 +582,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49611" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54149" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

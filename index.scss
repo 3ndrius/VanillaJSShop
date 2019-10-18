@@ -268,7 +268,7 @@ body {
         }
     }
 
-    i {
+    button{
         position: absolute;
         bottom: 5px;
         right: 0px;
@@ -279,10 +279,14 @@ body {
         transition: transform 0.3s ease-in-out;
         cursor: pointer;
         font-size: 30px;
+        border:none;
 
     }
+    button::before{
+        font-family: "FontAwesome"; font-weight: 300; content: " \f217";
+    }
 
-    &:hover i {
+    &:hover button{
         transform: translateX(0%);
     }
 }
