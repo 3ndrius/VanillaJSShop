@@ -168,14 +168,21 @@ body {
 
     &--shop {
         position: relative;
-        background: var(--main_black);
+        // background: var(--main_black);
         padding: 15px 17px 10px 10px;
-        color: var(--main_white);
+        color: var(--main_black);
+        font-size: 1.2em;
 
         .header-count {
             position: absolute;
-            right: 5px;
-            top: 5px;
+            right: 7px;
+            top: 0px;
+            font-weight: 400;
+            padding:1px 6px;
+            background: var(--main-theme);
+            color:var(--main_white);
+            border-radius:7px;
+            font-size: 0.8em;
         }
     }
 }
@@ -268,7 +275,7 @@ body {
         }
     }
 
-    i {
+    button{
         position: absolute;
         bottom: 5px;
         right: 0px;
@@ -279,10 +286,14 @@ body {
         transition: transform 0.3s ease-in-out;
         cursor: pointer;
         font-size: 30px;
+        border:none;
 
     }
+    button::before{
+        font-family: "FontAwesome"; font-weight: 300; content: " \f217";
+    }
 
-    &:hover i {
+    &:hover button{
         transform: translateX(0%);
     }
 }

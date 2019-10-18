@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   --main_black: #131313;
   --second__black: #363636;
@@ -145,14 +146,20 @@ body {
 }
 .header__link--shop {
   position: relative;
-  background: var(--main_black);
   padding: 15px 17px 10px 10px;
-  color: var(--main_white);
+  color: var(--main_black);
+  font-size: 1.2em;
 }
 .header__link--shop .header-count {
   position: absolute;
-  right: 5px;
-  top: 5px;
+  right: 7px;
+  top: 0px;
+  font-weight: 400;
+  padding: 1px 6px;
+  background: var(--main-theme);
+  color: var(--main_white);
+  border-radius: 7px;
+  font-size: 0.8em;
 }
 
 /* ############ MAIN ############# */
@@ -234,7 +241,7 @@ body {
 .products__image img:hover {
   opacity: 1;
 }
-.products__image i {
+.products__image button {
   position: absolute;
   bottom: 5px;
   right: 0px;
@@ -245,8 +252,14 @@ body {
   transition: transform 0.3s ease-in-out;
   cursor: pointer;
   font-size: 30px;
+  border: none;
 }
-.products__image:hover i {
+.products__image button::before {
+  font-family: "FontAwesome";
+  font-weight: 300;
+  content: " ";
+}
+.products__image:hover button {
   transform: translateX(0%);
 }
 

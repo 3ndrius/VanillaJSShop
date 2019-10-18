@@ -1,10 +1,13 @@
 const cartMenuWrapper = document.querySelector('.shop-cart');
 const cartMenuBtn = document.querySelector('.cart-button');
 const cartMenu = document.querySelector('.shop-cart__container');
-
 const closeBtn = document.querySelector('.close');
-
 const productsDom = document.querySelector('.products__container')
+const headerTotal = document.querySelector('.header-count');
+const totalPrice = document.querySelector('.total-price');
+
+const menuCartList = document.querySelector('.shop-cart__list');
+
 
 cartMenuBtn.addEventListener('click', () => {
     cartMenuWrapper.style.display = 'flex';
@@ -53,38 +56,126 @@ class Products {
 class UI {
 
     showProducts(data) {
-       let resultItem= " ";
+        let resultItem = " ";
 
-       data.forEach(item => {
-        resultItem += `
+        data.forEach(item => {
+            resultItem += `
         <article class="products__item">
-        <div class="products__image">
-            <img src=${item.image} alt="products-image">
-            <i class="fa fa-shopping-cart fa-lg" data-id=${item.id} aria-hidden="true"></i>
-        </div>
-        <div class="products__title">
-            <h2>${item.title}</h2>
-        </div>
-        <div class="products__price">
-            ${item.price}
-        </div>
-    </article>
+            <div class="products__image">
+                <img src=${item.image} alt="products-image">
+                <button class="buy-btn" data-id=${item.id}> Add to cart</button>
+            </div>
+            <div class="products__title">
+                <h2>${item.title}</h2>
+            </div>
+            <div class="products__price">
+                ${item.price}
+            </div>
+        </article>
         `;
-        
-       })
-       productsDom.innerHTML = resultItem;
+
+        })
+        productsDom.innerHTML = resultItem;
+    }
+    getButtons() {
+        const buttonsBuy = [...document.querySelectorAll(".buy-btn")]
+
+        buttonsBuy.forEach(button => {
+            let id = button.dataset.id;
+            let inCart = cart.find(item => item.id === id);
+            if (inCart) {
+                button.innerHTML = " In cart"
+                button.disabled = true;
+            }
+            button.addEventListener('click', (e) => {
+                e.target.disabled = true;
+                e.target.innerHTML = " In cart"
+                console.log(e.target);
+                let cartItem = {
+                    ...Storage.getFromStorage(id),
+                    amount: 1
+                };
+                cart = [...cart, cartItem];
+
+                console.log(cart);
+                Storage.saveCart(cart);
+
+                this.setCartTotal(cart)
+
+                this.addToCart(cartItem);
+
+            })
+
+
+        })
+
+    }
+    setCartTotal(cart) {
+        let tempTotal = 0;
+        let itemsTotal = 0;
+        cart.map(item => {
+            tempTotal += item.price * item.amount;
+            itemsTotal += item.amount;
+        })
+        totalPrice.innerText = parseFloat(tempTotal.toFixed(2));
+        headerTotal.innerText = itemsTotal;
+    }
+    addToCart(item) {
+        let listItem = document.createElement('li');
+        listItem.innerHTML = `
+        <img src=${item.image} alt="small-img">
+        <div class="wrap">
+            <h4>${item.title}</h4>
+            <h5>$${item.price}</h5>
+            <p>remove</p>
+        </div>
+        <div class="count">
+            <i class="fa fa-angle-up" aria-hidden="true"></i>
+            <p>${item.amount}</p>
+            <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </div>
+        `
+        menuCartList.appendChild(listItem);
+    }
+    setupApp() {
+        cart = Storage.getCart();
+        this.setCartTotal(cart);
+        this.populateCart(cart);
+    }
+    populateCart(cart) {
+        cart.forEach(item => this.addToCart(item));
     }
 
 }
 class Storage {
 
+    static saveToStorage(data) {
+        localStorage.setItem("products", JSON.stringify(data))
+    }
+    static getFromStorage(id) {
+        let product = JSON.parse(localStorage.getItem("products"));
+        return product.find(item => item.id === id)
+    }
+    static saveCart(cart) {
+        localStorage.setItem('cart', JSON.stringify(cart));
+        console.log("save");
+    }
+    static getCart() {
+        return localStorage.getItem('cart') ?
+            JSON.parse(localStorage.getItem('cart')) : []
+    }
 }
 document.addEventListener('DOMContentLoaded', () => {
 
     let products = new Products;
     let layout = new UI;
+    layout.setupApp();
     products.getProducts().then(product => {
-        layout.showProducts(product)
-    })
-  
+            layout.showProducts(product)
+            Storage.saveToStorage(product);
+        })
+        .then(() => {
+            layout.getButtons();
+        })
+
 })
