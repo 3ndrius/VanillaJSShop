@@ -99,7 +99,6 @@ class UI {
                 };
                 cart = [...cart, cartItem];
 
-                console.log(cart);
                 Storage.saveCart(cart);
 
                 this.setCartTotal(cart)
@@ -147,13 +146,32 @@ class UI {
     populateCart(cart) {
         cart.forEach(item => this.addToCart(item));
     }
+    cartLogic(){
+        clearCartBtn.addEventListener('click', () => {
+           
+            this.clearCart();
+        })
+     
+       
+        
+    }
     clearCart() {
-        Storage.clearCart();
-        let cart = Storage.getCart();
+        let cartIds= cart.map(item => item.id)
+        cartIds.forEach(id => this.removeItem(id));
+        while(menuCartList.children.length > 0) {
+            menuCartList.removeChild(menuCartList.children[0])
+        }
+    }
+    removeItem(id){
+        cart = cart.filter(item => item.id !== id);
         this.setCartTotal(cart);
-        this.populateCart(cart);
-        console.log(cart);
-        this.getButtons();
+        Storage.saveCart(cart);
+        let btn = this.getSingleBtn(id);
+        btn.disabled = false;
+        btn.innerHTML = ` Add to cart`;
+    }
+    getSingleBtn(id){
+        return [...document.querySelectorAll(".buy-btn")].find(button => button.dataset.id === id )
     }
 
 }
@@ -175,7 +193,7 @@ class Storage {
             JSON.parse(localStorage.getItem('cart')) : []
     }
     static clearCart() {
-        return localStorage.clear('cart');
+       
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
@@ -190,8 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(() => {
             layout.getButtons();
         })
-        clearCartBtn.addEventListener('click', ()=> {
-            layout.clearCart();
-        })
+    layout.cartLogic();
 
 })

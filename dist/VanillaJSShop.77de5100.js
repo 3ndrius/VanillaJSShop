@@ -518,7 +518,6 @@ function () {
         });
 
         cart = __spreadArrays(cart, [cartItem]);
-        console.log(cart);
         Storage.saveCart(cart);
 
         _this.setCartTotal(cart);
@@ -559,13 +558,44 @@ function () {
     });
   };
 
+  UI.prototype.cartLogic = function () {
+    var _this = this;
+
+    clearCartBtn.addEventListener('click', function () {
+      _this.clearCart();
+    });
+  };
+
   UI.prototype.clearCart = function () {
-    Storage.clearCart();
-    var cart = Storage.getCart();
+    var _this = this;
+
+    var cartIds = cart.map(function (item) {
+      return item.id;
+    });
+    cartIds.forEach(function (id) {
+      return _this.removeItem(id);
+    });
+
+    while (menuCartList.children.length > 0) {
+      menuCartList.removeChild(menuCartList.children[0]);
+    }
+  };
+
+  UI.prototype.removeItem = function (id) {
+    cart = cart.filter(function (item) {
+      return item.id !== id;
+    });
     this.setCartTotal(cart);
-    this.populateCart(cart);
-    console.log(cart);
-    this.getButtons();
+    Storage.saveCart(cart);
+    var btn = this.getSingleBtn(id);
+    btn.disabled = false;
+    btn.innerHTML = " Add to cart";
+  };
+
+  UI.prototype.getSingleBtn = function (id) {
+    return __spreadArrays(document.querySelectorAll(".buy-btn")).find(function (button) {
+      return button.dataset.id === id;
+    });
   };
 
   return UI;
@@ -596,9 +626,7 @@ function () {
     return localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
   };
 
-  Storage.clearCart = function () {
-    return localStorage.clear('cart');
-  };
+  Storage.clearCart = function () {};
 
   return Storage;
 }();
@@ -613,9 +641,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }).then(function () {
     layout.getButtons();
   });
-  clearCartBtn.addEventListener('click', function () {
-    layout.clearCart();
-  });
+  layout.cartLogic();
 });
 },{"./products.json":"products.json"}],"C:/Users/andrz/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -644,7 +670,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60397" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50968" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
