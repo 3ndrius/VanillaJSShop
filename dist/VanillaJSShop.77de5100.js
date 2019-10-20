@@ -511,7 +511,6 @@ function () {
       button.addEventListener('click', function (e) {
         e.target.disabled = true;
         e.target.innerHTML = " In cart";
-        console.log(e.target);
 
         var cartItem = __assign(__assign({}, Storage.getFromStorage(id)), {
           amount: 1
@@ -658,7 +657,6 @@ function () {
 
   Storage.saveCart = function (cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
-    console.log("save");
   };
 
   Storage.getCart = function () {
