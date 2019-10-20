@@ -121,12 +121,12 @@ class UI {
         <div class="wrap">
             <h4>${item.title}</h4>
             <h5>$${item.price}</h5>
-            <p>remove</p>
+            <p class="remove" data-set=${item.id}>remove</p>
         </div>
-        <div class="count">
-            <i class="fa fa-angle-up" aria-hidden="true"></i>
+        <div class="count" >
+            <i class="fa fa-angle-up" aria-hidden="true" data-set=${item.id}></i>
             <p>${item.amount}</p>
-            <i class="fa fa-angle-down" aria-hidden="true"></i>
+            <i class="fa fa-angle-down" aria-hidden="true" data-set=${item.id} ></i>
         </div>
         `
         menuCartList.appendChild(listItem);
@@ -141,9 +141,17 @@ class UI {
     }
     cartLogic() {
         clearCartBtn.addEventListener('click', () => {
-
             this.clearCart();
         })
+        
+         menuCartList.addEventListener('click', e => {
+            let id = e.target.dataset.set
+            if(e.target.classList.contains('remove')) {
+               
+                console.log(id);
+                this.removeItem(id)
+            }
+         })
     }
     clearCart() {
         let cartIds = cart.map(item => item.id)
@@ -182,9 +190,7 @@ class Storage {
         return localStorage.getItem('cart') ?
             JSON.parse(localStorage.getItem('cart')) : []
     }
-    static clearCart() {
-
-    }
+    
 }
 document.addEventListener('DOMContentLoaded', () => {
 

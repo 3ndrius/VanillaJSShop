@@ -540,7 +540,7 @@ function () {
 
   UI.prototype.addToCart = function (item) {
     var listItem = document.createElement('li');
-    listItem.innerHTML = "\n        <img src=" + item.image + " alt=\"small-img\">\n        <div class=\"wrap\">\n            <h4>" + item.title + "</h4>\n            <h5>$" + item.price + "</h5>\n            <p>remove</p>\n        </div>\n        <div class=\"count\">\n            <i class=\"fa fa-angle-up\" aria-hidden=\"true\"></i>\n            <p>" + item.amount + "</p>\n            <i class=\"fa fa-angle-down\" aria-hidden=\"true\"></i>\n        </div>\n        ";
+    listItem.innerHTML = "\n        <img src=" + item.image + " alt=\"small-img\">\n        <div class=\"wrap\">\n            <h4>" + item.title + "</h4>\n            <h5>$" + item.price + "</h5>\n            <p class=\"remove\" data-set=" + item.id + ">remove</p>\n        </div>\n        <div class=\"count\" >\n            <i class=\"fa fa-angle-up\" aria-hidden=\"true\" data-set=" + item.id + "></i>\n            <p>" + item.amount + "</p>\n            <i class=\"fa fa-angle-down\" aria-hidden=\"true\" data-set=" + item.id + " ></i>\n        </div>\n        ";
     menuCartList.appendChild(listItem);
   };
 
@@ -563,6 +563,15 @@ function () {
 
     clearCartBtn.addEventListener('click', function () {
       _this.clearCart();
+    });
+    menuCartList.addEventListener('click', function (e) {
+      var id = e.target.dataset.set;
+
+      if (e.target.classList.contains('remove')) {
+        console.log(id);
+
+        _this.removeItem(id);
+      }
     });
   };
 
@@ -625,8 +634,6 @@ function () {
   Storage.getCart = function () {
     return localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
   };
-
-  Storage.clearCart = function () {};
 
   return Storage;
 }();
