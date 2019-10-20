@@ -89,7 +89,6 @@ class UI {
             button.addEventListener('click', (e) => {
                 e.target.disabled = true;
                 e.target.innerHTML = " In cart"
-                console.log(e.target);
                 let cartItem = {
                     ...Storage.getFromStorage(id),
                     amount: 1
@@ -121,12 +120,12 @@ class UI {
         <div class="wrap">
             <h4>${item.title}</h4>
             <h5>$${item.price}</h5>
-            <p>remove</p>
+            <p class="remove" data-id=${item.id}>remove</p>
         </div>
-        <div class="count">
-            <i class="fa fa-angle-up" aria-hidden="true"></i>
-            <p>${item.amount}</p>
-            <i class="fa fa-angle-down" aria-hidden="true"></i>
+        <div class="count" >
+            <i class="fa fa-angle-up" aria-hidden="true" data-id=${item.id}></i>
+            <p class="item-amount" >${item.amount}</p>
+            <i class="fa fa-angle-down" aria-hidden="true" data-id=${item.id} ></i>
         </div>
         `
         menuCartList.appendChild(listItem);
@@ -141,8 +140,39 @@ class UI {
     }
     cartLogic() {
         clearCartBtn.addEventListener('click', () => {
-
             this.clearCart();
+        })
+
+        menuCartList.addEventListener('click', e => {
+
+            if (e.target.classList.contains('remove')) {
+                let removesItem = e.target;
+                let id = removesItem.dataset.id;
+                this.removeItem(id);
+                menuCartList.removeChild(e.target.parentElement.parentElement)
+            } else if (e.target.classList.contains('fa-angle-up')) {
+                let id = e.target.dataset.id;
+                let tempAmount = cart.find(item => item.id === id)
+                tempAmount.amount = tempAmount.amount + 1;
+                Storage.saveCart(cart);
+                this.setCartTotal(cart);
+                e.target.nextElementSibling.innerText = tempAmount.amount
+
+            } else if (e.target.classList.contains('fa-angle-down')) {
+                let id = e.target.dataset.id;
+                let lowerAmount = cart.find(item => item.id === id)
+                lowerAmount.amount = lowerAmount.amount - 1;
+
+                if (lowerAmount.amount > 0) {
+                    Storage.saveCart(cart);
+                    this.setCartTotal(cart);
+                    e.target.previousElementSibling.innerText = lowerAmount.amount
+                } else {
+                    this.removeItem(id);
+                    menuCartList.removeChild(e.target.parentElement.parentElement)
+                }
+
+            }
         })
     }
     clearCart() {
@@ -163,7 +193,6 @@ class UI {
     getSingleBtn(id) {
         return [...document.querySelectorAll(".buy-btn")].find(button => button.dataset.id === id)
     }
-
 }
 class Storage {
 
@@ -176,14 +205,10 @@ class Storage {
     }
     static saveCart(cart) {
         localStorage.setItem('cart', JSON.stringify(cart));
-        console.log("save");
     }
     static getCart() {
         return localStorage.getItem('cart') ?
             JSON.parse(localStorage.getItem('cart')) : []
-    }
-    static clearCart() {
-
     }
 }
 document.addEventListener('DOMContentLoaded', () => {

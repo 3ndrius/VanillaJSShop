@@ -511,7 +511,6 @@ function () {
       button.addEventListener('click', function (e) {
         e.target.disabled = true;
         e.target.innerHTML = " In cart";
-        console.log(e.target);
 
         var cartItem = __assign(__assign({}, Storage.getFromStorage(id)), {
           amount: 1
@@ -540,7 +539,7 @@ function () {
 
   UI.prototype.addToCart = function (item) {
     var listItem = document.createElement('li');
-    listItem.innerHTML = "\n        <img src=" + item.image + " alt=\"small-img\">\n        <div class=\"wrap\">\n            <h4>" + item.title + "</h4>\n            <h5>$" + item.price + "</h5>\n            <p>remove</p>\n        </div>\n        <div class=\"count\">\n            <i class=\"fa fa-angle-up\" aria-hidden=\"true\"></i>\n            <p>" + item.amount + "</p>\n            <i class=\"fa fa-angle-down\" aria-hidden=\"true\"></i>\n        </div>\n        ";
+    listItem.innerHTML = "\n        <img src=" + item.image + " alt=\"small-img\">\n        <div class=\"wrap\">\n            <h4>" + item.title + "</h4>\n            <h5>$" + item.price + "</h5>\n            <p class=\"remove\" data-id=" + item.id + ">remove</p>\n        </div>\n        <div class=\"count\" >\n            <i class=\"fa fa-angle-up\" aria-hidden=\"true\" data-id=" + item.id + "></i>\n            <p class=\"item-amount\" >" + item.amount + "</p>\n            <i class=\"fa fa-angle-down\" aria-hidden=\"true\" data-id=" + item.id + " ></i>\n        </div>\n        ";
     menuCartList.appendChild(listItem);
   };
 
@@ -563,6 +562,45 @@ function () {
 
     clearCartBtn.addEventListener('click', function () {
       _this.clearCart();
+    });
+    menuCartList.addEventListener('click', function (e) {
+      if (e.target.classList.contains('remove')) {
+        var removesItem = e.target;
+        var id = removesItem.dataset.id;
+
+        _this.removeItem(id);
+
+        menuCartList.removeChild(e.target.parentElement.parentElement);
+      } else if (e.target.classList.contains('fa-angle-up')) {
+        var id_1 = e.target.dataset.id;
+        var tempAmount = cart.find(function (item) {
+          return item.id === id_1;
+        });
+        tempAmount.amount = tempAmount.amount + 1;
+        Storage.saveCart(cart);
+
+        _this.setCartTotal(cart);
+
+        e.target.nextElementSibling.innerText = tempAmount.amount;
+      } else if (e.target.classList.contains('fa-angle-down')) {
+        var id_2 = e.target.dataset.id;
+        var lowerAmount = cart.find(function (item) {
+          return item.id === id_2;
+        });
+        lowerAmount.amount = lowerAmount.amount - 1;
+
+        if (lowerAmount.amount > 0) {
+          Storage.saveCart(cart);
+
+          _this.setCartTotal(cart);
+
+          e.target.previousElementSibling.innerText = lowerAmount.amount;
+        } else {
+          _this.removeItem(id_2);
+
+          menuCartList.removeChild(e.target.parentElement.parentElement);
+        }
+      }
     });
   };
 
@@ -619,14 +657,11 @@ function () {
 
   Storage.saveCart = function (cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
-    console.log("save");
   };
 
   Storage.getCart = function () {
     return localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
   };
-
-  Storage.clearCart = function () {};
 
   return Storage;
 }();
@@ -670,7 +705,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50968" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54238" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
