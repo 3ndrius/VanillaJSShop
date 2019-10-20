@@ -574,7 +574,6 @@ function () {
         menuCartList.removeChild(e.target.parentElement.parentElement);
       } else if (e.target.classList.contains('fa-angle-up')) {
         var id_1 = e.target.dataset.id;
-        console.log(id_1);
         var tempAmount = cart.find(function (item) {
           return item.id === id_1;
         });
@@ -584,6 +583,24 @@ function () {
         _this.setCartTotal(cart);
 
         e.target.nextElementSibling.innerText = tempAmount.amount;
+      } else if (e.target.classList.contains('fa-angle-down')) {
+        var id_2 = e.target.dataset.id;
+        var lowerAmount = cart.find(function (item) {
+          return item.id === id_2;
+        });
+        lowerAmount.amount = lowerAmount.amount - 1;
+
+        if (lowerAmount.amount > 0) {
+          Storage.saveCart(cart);
+
+          _this.setCartTotal(cart);
+
+          e.target.previousElementSibling.innerText = lowerAmount.amount;
+        } else {
+          _this.removeItem(id_2);
+
+          menuCartList.removeChild(e.target.parentElement.parentElement);
+        }
       }
     });
   };

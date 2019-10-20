@@ -154,13 +154,28 @@ class UI {
             }
             else if( e.target.classList.contains('fa-angle-up')){
                 let id = e.target.dataset.id;
-                console.log(id);
               let tempAmount = cart.find(item=> item.id === id)
                 tempAmount.amount = tempAmount.amount + 1;
                Storage.saveCart(cart);
                this.setCartTotal(cart);
                e.target.nextElementSibling.innerText = tempAmount.amount 
                
+            }
+            else if( e.target.classList.contains('fa-angle-down')){
+                let id = e.target.dataset.id;
+                let lowerAmount = cart.find(item=> item.id === id)
+                lowerAmount.amount = lowerAmount.amount - 1;
+
+                if(lowerAmount.amount > 0 ) {
+                    Storage.saveCart(cart);
+                    this.setCartTotal(cart);
+                    e.target.previousElementSibling.innerText = lowerAmount.amount 
+                }
+                else{
+                    this.removeItem(id);
+                    menuCartList.removeChild(e.target.parentElement.parentElement)
+                }
+
             }
          })
     }
