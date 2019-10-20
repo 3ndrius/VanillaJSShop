@@ -5,11 +5,8 @@ const closeBtn = document.querySelector('.close');
 const productsDom = document.querySelector('.products__container')
 const headerTotal = document.querySelector('.header-count');
 const totalPrice = document.querySelector('.total-price');
-
 const menuCartList = document.querySelector('.shop-cart__list');
-
 const clearCartBtn = document.querySelector('.btn--total');
-
 
 cartMenuBtn.addEventListener('click', () => {
     cartMenuWrapper.style.display = 'flex';
@@ -104,12 +101,8 @@ class UI {
                 this.setCartTotal(cart)
 
                 this.addToCart(cartItem);
-
             })
-
-
         })
-
     }
     setCartTotal(cart) {
         let tempTotal = 0;
@@ -146,23 +139,20 @@ class UI {
     populateCart(cart) {
         cart.forEach(item => this.addToCart(item));
     }
-    cartLogic(){
+    cartLogic() {
         clearCartBtn.addEventListener('click', () => {
-           
+
             this.clearCart();
         })
-     
-       
-        
     }
     clearCart() {
-        let cartIds= cart.map(item => item.id)
+        let cartIds = cart.map(item => item.id)
         cartIds.forEach(id => this.removeItem(id));
-        while(menuCartList.children.length > 0) {
+        while (menuCartList.children.length > 0) {
             menuCartList.removeChild(menuCartList.children[0])
         }
     }
-    removeItem(id){
+    removeItem(id) {
         cart = cart.filter(item => item.id !== id);
         this.setCartTotal(cart);
         Storage.saveCart(cart);
@@ -170,8 +160,8 @@ class UI {
         btn.disabled = false;
         btn.innerHTML = ` Add to cart`;
     }
-    getSingleBtn(id){
-        return [...document.querySelectorAll(".buy-btn")].find(button => button.dataset.id === id )
+    getSingleBtn(id) {
+        return [...document.querySelectorAll(".buy-btn")].find(button => button.dataset.id === id)
     }
 
 }
@@ -193,7 +183,7 @@ class Storage {
             JSON.parse(localStorage.getItem('cart')) : []
     }
     static clearCart() {
-       
+
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
