@@ -121,12 +121,12 @@ class UI {
         <div class="wrap">
             <h4>${item.title}</h4>
             <h5>$${item.price}</h5>
-            <p class="remove" data-set=${item.id}>remove</p>
+            <p class="remove" data-id=${item.id}>remove</p>
         </div>
         <div class="count" >
-            <i class="fa fa-angle-up" aria-hidden="true" data-set=${item.id}></i>
-            <p>${item.amount}</p>
-            <i class="fa fa-angle-down" aria-hidden="true" data-set=${item.id} ></i>
+            <i class="fa fa-angle-up" aria-hidden="true" data-id=${item.id}></i>
+            <p class="item-amount" >${item.amount}</p>
+            <i class="fa fa-angle-down" aria-hidden="true" data-id=${item.id} ></i>
         </div>
         `
         menuCartList.appendChild(listItem);
@@ -145,11 +145,22 @@ class UI {
         })
         
          menuCartList.addEventListener('click', e => {
-            let id = e.target.dataset.set
+          
             if(e.target.classList.contains('remove')) {
-               
+                let removesItem = e.target;
+                let id = removesItem.dataset.id;
+                this.removeItem(id);
+                menuCartList.removeChild(e.target.parentElement.parentElement)
+            }
+            else if( e.target.classList.contains('fa-angle-up')){
+                let id = e.target.dataset.id;
                 console.log(id);
-                this.removeItem(id)
+              let tempAmount = cart.find(item=> item.id === id)
+                tempAmount.amount = tempAmount.amount + 1;
+               Storage.saveCart(cart);
+               this.setCartTotal(cart);
+               e.target.nextElementSibling.innerText = tempAmount.amount 
+               
             }
          })
     }
