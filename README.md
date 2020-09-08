@@ -19,6 +19,8 @@ Vanilla JavaScript app using typescript and OOP allows user to choose product an
 
 ## SCREEN
 
+![prev01](https://github.com/3ndrius/VanillaJSShop/blob/master/screenshoot/landing.png?raw=true)
+![prev02](https://github.com/3ndrius/VanillaJSShop/blob/master/screenshoot/grid.png?raw=true)
 
 ### HOW TO RUN
 
